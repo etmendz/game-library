@@ -26,5 +26,7 @@ jobs:
       run: dotnet build --no-restore
 #    - name: Test
 #      run: dotnet test --no-build --verbosity normal
+    - name: Source
+      run: dotnet nuget add source --username etmendz --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/etmendz/index.json"
     - name: Publish
-      run: dotnet nuget push "artifacts/package/release/GameLibrary.1.0.0.nupkg"  --api-key NUGET_MENDZAPIKEY101 --source "github"
+      run: dotnet nuget push "artifacts/package/release/GameLibrary.1.0.0.nupkg" --api-key NUGET_MENDZAPIKEY101 --source "github"
