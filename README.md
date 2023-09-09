@@ -24,7 +24,7 @@ The design allows the game developer to focus on implementing the game play and 
 
 Thus, for example, in a game console app's program main entry point, the developer can simply code:
 
-	new Game<GameUI, GamePlay>(name, copyright, description, splashText, gamePlayReadyMode).Play();
+	new GameConsole<GameUI, GamePlay>(name, copyright, description, splashText, gamePlayReadyMode).Play();
 
 ## IGamePlay
 Defines a game play designed to align with the basic construct's Start(), Action(), Continue(), GameOver() and End() methods.
@@ -39,35 +39,73 @@ An implementation must define a parameterless constructor that calls Initialize(
 ## GameRandomizer
 Defines a game randomizer to generate random numbers.
 
-## Console App Games
-The following enables console app game development using the GameLibrary.
+Methods are provided to get the next random number, the next random number below a limit, and the next random number within a minimum/maximum range.
 
-### Game
-Plays the game.
+## GamePlayReadyMode
+Specifies the game play ready mode or how the game flows.
 
-Game accepts a type that implements IGameUI, which requires a type that implements IGamePlay.
-
-Provides the Play() method which uses the given GamePlayReadyMode to switch the game flow.
-
-#### IfReady
+### IfReady
 Start only one game UI instance per launch.
 
-	if (Ready())
-	{
-		Set();
-		Go();
-	}
+Use for games where only one game can be started per launch. For these types of games, there is usually no real game over state.
 
-#### WhileReady
+An example is a dice guessing game, where the player guesses and rolls the dice:
+
+1. Guessing the number right or wrong simply displays the result.
+2. Then the game prompts the player to continue by guessing and rolling again:
+    - Opting to continue simply continues the same game;
+    - Otherwise, the game ends and closes.
+
+### WhileReady
 Allow starting more than one game UI instance per launch.
 
-	while (Ready())
-	{
-		Set();
-		Go();
-	}
+Use for games where the player can be prompted to start a new game. For these types of games, there is usually a real game over state.
 
-### GameUX
+An example is 2048, where the player performs moves to reach a goal:
+
+1. If the player wins, then the game prompts the player to continue to the next level:
+    - Opting to continue simply continues the same game;
+	- Otherwise, the game prompts the player to start a new game.
+2. If the player runs out of moves, then the game is over:
+    - Then the game prompts the player to start a new game.
+
+### GameConsole
+GameConsole accepts a type TGameUI that implements IGameUI, which requires a type TGamePlay that implements IGamePlay.
+
+Play() implements the basic flow, using the GamePlayReadyMode to switch:
+
+- IfReady
+```
+if (Ready())
+{
+	Set();
+	Go();
+}
+```
+- WhileReady
+```
+while (Ready())
+{
+	Set();
+	Go();
+}
+```
+Go() implements the basic construct as follows:
+
+	TGameUI gameUI = new();
+	if (gameUI.Start())
+	{
+		do
+		{
+			if (gameUI.Action())
+			{
+				if (!gameUI.Continue()) break;
+			}
+		} while (!gameUI.GameOver());
+	}
+	gameUI.End();
+
+### GameConsoleUX
 Provides the basic capabilities for game interactions via keyboard.
 
 Methods are provided to enable Y/N input, arrow key input, specific key input and valid keys input.

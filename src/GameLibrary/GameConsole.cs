@@ -7,7 +7,7 @@ using System.Reflection;
 namespace GameLibrary;
 
 /// <summary>
-/// Defines the game.
+/// Defines a game console app.
 /// </summary>
 /// <typeparam name="TGameUI">The game UI.</typeparam>
 /// <typeparam name="TGamePlay">The game play.</typeparam>
@@ -16,7 +16,7 @@ namespace GameLibrary;
 /// <param name="description">The game description.</param>
 /// <param name="splashText">The game splash text.</param>
 /// <param name="gamePlayReadyMode">The game play ready mode.</param>
-public class Game<TGameUI, TGamePlay>(string name, string copyright, string description, string? splashText = null, GamePlayReadyMode gamePlayReadyMode = GamePlayReadyMode.IfReady)
+public class GameConsole<TGameUI, TGamePlay>(string name, string copyright, string description, string? splashText = null, GamePlayReadyMode gamePlayReadyMode = GamePlayReadyMode.IfReady)
     where TGameUI : IGameUI<TGamePlay>, new()
     where TGamePlay : IGamePlay, new()
 {
@@ -139,7 +139,7 @@ public class Game<TGameUI, TGamePlay>(string name, string copyright, string desc
     {
         Console.WriteLine();
         Console.WriteLine("Press [Enter] to start playing...");
-        new GameUX().GetKey(ConsoleKey.Enter);
+        new GameConsoleUX().GetKey(ConsoleKey.Enter);
     }
 
     /// <summary>

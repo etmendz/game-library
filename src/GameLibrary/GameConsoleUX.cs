@@ -5,10 +5,10 @@
 namespace GameLibrary;
 
 /// <summary>
-/// Defines the game UX capabilities for game flow and game play interactions.
+/// Defines the game console UX capabilities for game flow and game play interactions.
 /// </summary>
 /// <param name="escExit">Indicates if the [Esc] key exits the application. Default is true.</param>
-public class GameUX(bool escExit = true)
+public class GameConsoleUX(bool escExit = true)
 {
     /// <summary>
     /// Gets or sets an indicator if the [Esc] key exits the application.
