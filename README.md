@@ -32,9 +32,9 @@ Defines a game play designed to align with the basic construct's Start(), Action
 ## IGameUI
 Defines a game UI designed to align with the basic construct's Start(), Action(), Continue(), GameOver() and End() methods.
 
-IGameUI accepts a type that implements IGamePlay, and provides additional methods to Initialize(), Render() and Refresh().
+IGameUI accepts a type that implements IGamePlay, and provides additional methods to Render() and Refresh().
 
-An implementation must define a parameterless constructor that calls Initialize().
+An implementation must define a parameterless constructor that initializes an IGamePlay instance.
 
 ## GameRandomizer
 Defines a game randomizer to generate random numbers.

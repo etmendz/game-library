@@ -14,12 +14,7 @@ public interface IGameUI<TGamePlay>
     /// <summary>
     /// Gets or sets the game play.
     /// </summary>
-    public TGamePlay GamePlay { get; protected set; }
-
-    /// <summary>
-    /// Initializes the game UI game play.
-    /// </summary>
-    public void Initialize() => GamePlay = new();
+    public TGamePlay GamePlay { get; set; }
 
     /// <summary>
     /// Starts the game.

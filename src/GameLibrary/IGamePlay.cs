@@ -18,10 +18,11 @@ public interface IGamePlay
     /// <summary>
     /// Executes the game play action.
     /// </summary>
-    /// <typeparam name="T">The type of action.</typeparam>
-    /// <param name="action">The game play action to execute.</param>
-    /// <returns>True if the game play action is executed, else false.</returns>
-    public bool Action<T>(T action);
+    /// <typeparam name="TIn">The type of action input.</typeparam>
+    /// <typeparam name="TOut">The type of action output or result.</typeparam>
+    /// <param name="action">The action input.</param>
+    /// <returns>The action output or result.</returns>
+    public TOut Action<TIn, TOut>(TIn action);
 
     /// <summary>
     /// Continues the game play.
