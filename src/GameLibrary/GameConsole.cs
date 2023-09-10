@@ -11,14 +11,16 @@ namespace GameLibrary;
 /// </summary>
 /// <typeparam name="TGameUI">The game UI.</typeparam>
 /// <typeparam name="TGamePlay">The game play.</typeparam>
+/// <typeparam name="TActionIn">The action input type.</typeparam>
+/// <typeparam name="TActionOut">The action output or result type.</typeparam>
 /// <param name="name">The game's name.</param>
 /// <param name="copyright">The game copyright information.</param>
 /// <param name="description">The game description.</param>
 /// <param name="splashText">The game splash text.</param>
 /// <param name="gamePlayReadyMode">The game play ready mode.</param>
-public class GameConsole<TGameUI, TGamePlay>(string name, string copyright, string description, string? splashText = null, GamePlayReadyMode gamePlayReadyMode = GamePlayReadyMode.IfReady)
-    where TGameUI : IGameUI<TGamePlay>, new()
-    where TGamePlay : IGamePlay, new()
+public class GameConsole<TGameUI, TGamePlay, TActionIn, TActionOut>(string name, string copyright, string description, string? splashText = null, GamePlayReadyMode gamePlayReadyMode = GamePlayReadyMode.IfReady)
+    where TGameUI : IGameUI<TGamePlay, TActionIn, TActionOut>, new()
+    where TGamePlay : IGamePlay<TActionIn, TActionOut>, new()
 {
     /// <summary>
     /// Gets the game's name.

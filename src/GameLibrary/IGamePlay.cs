@@ -7,7 +7,9 @@ namespace GameLibrary;
 /// <summary>
 /// Defines the game play.
 /// </summary>
-public interface IGamePlay
+/// <typeparam name="TActionIn">The action input type.</typeparam>
+/// <typeparam name="TActionOut">The action output or result type.</typeparam>
+public interface IGamePlay<TActionIn, TActionOut>
 {
     /// <summary>
     /// Starts the game play.
@@ -18,11 +20,9 @@ public interface IGamePlay
     /// <summary>
     /// Executes the game play action.
     /// </summary>
-    /// <typeparam name="TIn">The type of action input.</typeparam>
-    /// <typeparam name="TOut">The type of action output or result.</typeparam>
     /// <param name="action">The action input.</param>
     /// <returns>The action output or result.</returns>
-    public TOut Action<TIn, TOut>(TIn action);
+    public TActionOut Action(TActionIn action);
 
     /// <summary>
     /// Continues the game play.
