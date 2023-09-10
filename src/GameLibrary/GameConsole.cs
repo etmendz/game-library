@@ -20,7 +20,7 @@ namespace GameLibrary;
 /// <param name="gamePlayReadyMode">The game play ready mode.</param>
 public class GameConsole<TGameUI, TGamePlay, TActionIn, TActionOut>(string name, string copyright, string description, string? splashText = null, GamePlayReadyMode gamePlayReadyMode = GamePlayReadyMode.IfReady)
     where TGameUI : IGameUI<TGamePlay, TActionIn, TActionOut>, new()
-    where TGamePlay : IGamePlay<TActionIn, TActionOut>, new()
+    where TGamePlay : IGamePlay<TActionIn, TActionOut>
 {
     /// <summary>
     /// Gets the game's name.

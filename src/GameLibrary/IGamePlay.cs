@@ -9,7 +9,7 @@ namespace GameLibrary;
 /// </summary>
 /// <typeparam name="TActionIn">The action input type.</typeparam>
 /// <typeparam name="TActionOut">The action output or result type.</typeparam>
-public interface IGamePlay<TActionIn, TActionOut>
+public interface IGamePlay<in TActionIn, out TActionOut>
 {
     /// <summary>
     /// Starts the game play.

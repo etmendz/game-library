@@ -18,23 +18,31 @@ The GameLibrary provides a simple framework for creating games that can follow a
 	}
 	End();
 
-The basic flow and basic construct combined defines the game's runtime. The general philosophy playfully plays with the idea that playing games can begin with "Ready? Set? Go!". The game can then Start to monitor game Actions, Continue state, GameOver state, and finally End.
+The basic flow and basic construct combined defines the game's runtime. The general philosophy playfully plays with the idea that playing games can begin with "Ready? Set? Go!". The game can then Start to monitor game Actions, Continue state and GameOver state, to finally End.
 
 The design allows the game developer to focus on implementing the game play and the game UI.
 
 Thus, for example, in a game console app's program main entry point, the developer can simply code:
 
-	new GameConsole<GameUI, GamePlay>(name, copyright, description, splashText, gamePlayReadyMode).Play();
+	new GameConsole<GameUI, GamePlay, ConsoleKey, bool>(
+		"Game name", 
+		"All rights reserved.", 
+		"Game description.", 
+		"Press [Esc] anytime to exit.", 
+		GamePlayReadyMode.WhileReady
+	).Play();
 
-## IGamePlay
+## IGamePlay<in TActionIn, out TActionOut>
 Defines a game play designed to align with the basic construct's Start(), Action(), Continue(), GameOver() and End() methods.
 
-## IGameUI
+The game play Action() is defined by the *in* and *out* generic types passed to IGamePlay.
+
+## IGameUI<TGamePlay, in TActionIn, out TActionOut>
 Defines a game UI designed to align with the basic construct's Start(), Action(), Continue(), GameOver() and End() methods.
 
 IGameUI accepts a type that implements IGamePlay, and provides additional methods to Render() and Refresh().
 
-An implementation must define a parameterless constructor that initializes an IGamePlay instance.
+An implementation must define a parameterless constructor that can initialize an IGamePlay instance.
 
 ## GameRandomizer
 Defines a game randomizer to generate random numbers.
@@ -69,8 +77,8 @@ An example is 2048, where the player performs moves to reach a goal:
 2. If the player runs out of moves, then the game is over:
     - Then the game prompts the player to start a new game.
 
-### GameConsole
-GameConsole accepts a type TGameUI that implements IGameUI, which requires a type TGamePlay that implements IGamePlay.
+### GameConsole<TGameUI, TGamePlay, TActionIn, TActionOut>
+GameConsole accepts a type that implements IGameUI, which requires a type that implements IGamePlay.
 
 Play() implements the basic flow, using the GamePlayReadyMode to switch:
 

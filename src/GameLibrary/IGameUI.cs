@@ -10,8 +10,8 @@ namespace GameLibrary;
 /// <typeparam name="TGamePlay">The game play.</typeparam>
 /// <typeparam name="TActionIn">The action input type.</typeparam>
 /// <typeparam name="TActionOut">The action output or result type.</typeparam>
-public interface IGameUI<TGamePlay, TActionIn, TActionOut>
-    where TGamePlay : IGamePlay<TActionIn, TActionOut>, new()
+public interface IGameUI<TGamePlay, in TActionIn, out TActionOut>
+    where TGamePlay : IGamePlay<TActionIn, TActionOut>
 {
     /// <summary>
     /// Gets or sets the game play.
