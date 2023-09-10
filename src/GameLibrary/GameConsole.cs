@@ -58,6 +58,7 @@ public class GameConsole<TGameUI, TGamePlay, TActionIn, TActionOut>(string name,
     /// <remarks>The default implementation basically calls (if|while) Ready(), Set(), Go()!</remarks>
     public virtual void Play()
     {
+        Console.CursorVisible = false;
         switch (GamePlayReadyMode)
         {
             case GamePlayReadyMode.IfReady:
@@ -92,6 +93,7 @@ public class GameConsole<TGameUI, TGamePlay, TActionIn, TActionOut>(string name,
             default:
                 break;
         }
+        Console.CursorVisible = true;
     }
 
     /// <summary>

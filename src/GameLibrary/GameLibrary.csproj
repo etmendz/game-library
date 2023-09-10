@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	  <LangVersion>preview</LangVersion>
-	  <Version>1.0.3</Version>
+	  <Version>1.0.4</Version>
 	  <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	  <Copyright>© Mendz, etmendz. All rights reserved.</Copyright>
