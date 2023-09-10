@@ -10,6 +10,7 @@ namespace GameLibrary;
 /// <typeparam name="TGamePlay">The game play.</typeparam>
 /// <typeparam name="TActionIn">The action input type.</typeparam>
 /// <typeparam name="TActionOut">The action output or result type.</typeparam>
+/// <remarks>Implementations can be UI/UX platform specific.</remarks>
 public interface IGameUI<TGamePlay, in TActionIn, out TActionOut>
     where TGamePlay : IGamePlay<TActionIn, TActionOut>
 {

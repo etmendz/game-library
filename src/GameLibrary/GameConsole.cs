@@ -7,7 +7,7 @@ using System.Reflection;
 namespace GameLibrary;
 
 /// <summary>
-/// Defines a game console app.
+/// Implements IGameFlow to define a console app game that can consume the provided IGameUI and IGamePlay implementations.
 /// </summary>
 /// <typeparam name="TGameUI">The game UI.</typeparam>
 /// <typeparam name="TGamePlay">The game play.</typeparam>
@@ -18,7 +18,19 @@ namespace GameLibrary;
 /// <param name="description">The game description.</param>
 /// <param name="splashText">The game splash text.</param>
 /// <param name="gamePlayReadyMode">The game play ready mode.</param>
-public class GameConsole<TGameUI, TGamePlay, TActionIn, TActionOut>(string name, string copyright, string description, string? splashText = null, GamePlayReadyMode gamePlayReadyMode = GamePlayReadyMode.IfReady)
+/// <remarks>
+/// The program main entry point can use the following boilerplate template to call Play():
+/// <code>
+/// new GameConsole<GameUI, GamePlay, ConsoleKey, bool>(
+///		"Game name", 
+///		"All rights reserved.", 
+///		"Game description.", 
+///		"Press [Esc] anytime to exit.", 
+///		GamePlayReadyMode.WhileReady
+///	).Play();
+/// </code>
+/// </remarks>
+public class GameConsole<TGameUI, TGamePlay, TActionIn, TActionOut>(string name, string copyright, string description, string? splashText = null, GamePlayReadyMode gamePlayReadyMode = GamePlayReadyMode.IfReady) : IGameFlow
     where TGameUI : IGameUI<TGamePlay, TActionIn, TActionOut>, new()
     where TGamePlay : IGamePlay<TActionIn, TActionOut>
 {
@@ -55,7 +67,7 @@ public class GameConsole<TGameUI, TGamePlay, TActionIn, TActionOut>(string name,
     /// <summary>
     /// Plays the game.
     /// </summary>
-    /// <remarks>The default implementation basically calls (if|while) Ready(), Set(), Go()!</remarks>
+    /// <remarks>The default implementation uses GamePlayReadyMode to switch (if|while) Ready(), Set(), Go()!</remarks>
     public virtual void Play()
     {
         Console.CursorVisible = false;
