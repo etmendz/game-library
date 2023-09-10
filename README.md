@@ -20,7 +20,7 @@ The GameLibrary provides a simple framework for creating games that can follow a
 
 The basic flow and basic construct combined establishes a structure for the game's runtime. The general philosophy playfully plays with the idea that playing games can begin with "Ready? Set? Go!". The game can then Start to monitor game Actions, Continue state and GameOver state, to finally End.
 
-The design allows the game developer to focus on implementing the game play and the game UI, which can then be consumed by a 
+The design allows the game developer to focus on implementing the game play and the game UI, which can then be consumed by a game flow implementation.
 
 Thus, for example, in a game console app's program main entry point, the developer can simply code:
 
