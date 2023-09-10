@@ -46,7 +46,7 @@ public class GameConsoleUX(bool escExit = true)
         {
             key = Console.ReadKey(true).Key;
             if (EscExit && key == ConsoleKey.Escape) Environment.Exit(0);
-        } while (validKeys.Contains(key)); // Loop until the user presses a valid key.
+        } while (!validKeys.Contains(key)); // Loop until the user presses a valid key.
         return key;
     }
 }
