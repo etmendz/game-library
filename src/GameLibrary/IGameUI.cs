@@ -23,38 +23,62 @@ public interface IGameUI<TGamePlay, in TActionIn, out TActionOut>
     /// Starts the game.
     /// </summary>
     /// <returns>True if the game is started, else false.</returns>
-    public bool Start() => GamePlay.Start();
+    /// <remarks>
+    /// The default implementation is as follows:
+    /// <code>
+    /// bool start = GamePlay.Start();
+    /// if (start) Render();
+    /// return start;
+    /// </code>
+    /// </remarks>
+    public bool Start()
+    {
+        bool start = GamePlay.Start();
+        if (start) Render();
+        return start;
+    }
 
     /// <summary>
     /// Renders the game UI.
     /// </summary>
+    /// <remarks>
+    /// The default implementation of Start() calls Render().
+    /// If not called at Start(), the first call should be made in Action().
+    /// </remarks>
     public void Render();
 
     /// <summary>
-    /// Refreshes the game UI,
+    /// Refreshes the game UI.
     /// </summary>
-    public void Refresh() => Render();
+    /// <remarks>
+    /// A typical implementation simply calls Render().
+    /// In this sense, where Render() is called at Start(), Refresh() is a mnemonic to re-render during game play.
+    /// Thus, Refresh() is usually called in Action() and/or Continue().
+    /// </remarks>
+    public void Refresh(); // => Render();
 
     /// <summary>
     /// Executes the game action.
     /// </summary>
-    /// <returns>True if the game action is executed, else false.</returns>
-    public bool Action();
+    /// <returns>True if the game play action is executed, else false.</returns>
+    public bool Action(); // => GamePlay.Action();
 
     /// <summary>
     /// Continues the game.
     /// </summary>
     /// <returns>True to continue, else false.</returns>
-    public bool Continue();
+    public bool Continue(); // => GamePlay.Continue();
 
     /// <summary>
     /// Detects if it's game over.
     /// </summary>
     /// <returns>True if game over, else false.</returns>
+    /// <remarks>The default implementation calls GamePlay.GameOver().</remarks>
     public bool GameOver() => GamePlay.GameOver();
 
     /// <summary>
     /// Ends the game.
     /// </summary>
+    /// <remarks>The default implementation calls GamePlay.End().</remarks>
     public void End() => GamePlay.End();
 }
