@@ -1,4 +1,4 @@
-[Wiki](https://github.com/etmendz/game-library/wiki)
+﻿[Wiki](https://github.com/etmendz/game-library/wiki)
 # GameLibrary
 The GameLibrary provides a simple framework for creating games that can follow a basic flow:
 
@@ -134,6 +134,52 @@ Go() implements the basic construct as follows:
 Provides the basic capabilities for game console app interactions via keyboard.
 
 Methods are provided to enable Y/N input, arrow key input, specific key input and valid keys input.
+
+# Examples
+Two game projects are included in the GameLibrary solution: GameConsole3Guesses and GameConsole3Seconds.
+
+They can be found under the repo's [examples/](https://github.com/etmendz/game-library/tree/main/examples) subfolder.
+
+## GameConsole3Guesses
+[GameConsole3Guesses](https://github.com/etmendz/game-library/tree/main/examples/GameConsole3Guesses) is a simple number guessing game.
+
+The player wins when the secret number is guessed correctly. The player has 3 chances to guess the secret number, else it's game over.
+
+The game uses GamePlayReadyMode.WhileReady. This means that every time the player opts to start playing (again), the program creates a new game UI instance. After the game ends, the game UI is also released from memory.
+
+After each game, the flow goes back to the Ready(), Set(), Go() loop.
+
+When prompted for control input, pressing the [Esc] key exits the game.
+
+The code pattern can be described as follows:
+
+- Start() renders the UI
+- Action() refreshes the UI, prompts for action input and processes the result
+- Continue() evaluates the game result and prompts for control input (to try again?)
+- GameOver() checks for the game over state
+- End() shows the game result.
+
+## GameConsole3Seconds
+[GameConsole3Seconds](https://github.com/etmendz/game-library/tree/main/examples/GameConsole3Seconds) challenges the player to stop the clock at 3 seconds flat.
+
+When started, the player simply presses the [Spacebar] to stop the clock. If it stops at 3 seconds on the dot, the player wins.
+
+The game uses GamePlayReadyMode.IfReady. This means that there is only one instance of the game UI.
+
+When the player opts to try again, the same game UI instance restarts the clock.
+
+There is no real game over state. Game over is essentially when the player quits.
+
+The code pattern can be described as follows:
+
+- Start() renders the UI
+- Action() refreshes the UI, prompts for action input and processes the result
+- Continue() evaluates the game result, shows the game result and prompts for control input (to try again?); if the player opts to continue, the clock is restarted and the UI is re-rendered.
+- GameOver() checks for the game over state (if the player opted to quit)
+- End() in effect, "acknowledges" that the player quits; essentially, does nothing.
+
+# Boilerplate
+Boilerplate template codes are available in the repo's [boilerplate/](https://github.com/etmendz/game-library/tree/main/boilerplate) subfolder.
 
 ---
 

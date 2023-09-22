@@ -1,0 +1,50 @@
+/*
+* GameLibrary (c) Mendz, etmendz. All rights reserved.
+* SPDX-License-Identifier: MIT 
+*
+* To use, save this template to a new .cs file (ex. GameIO.cs) in your project.
+* Replace "game-console-app-name" with your game console app project's namespace.
+* Find and replace all "model-class-name" with the name of the game's model class name.
+* This template is an example how to create a basic game IO that is native AOT compatibile.
+*
+* Example:
+* https://github.com/etmendz/game-console-2048/blob/main/src/GameConsole2048/GameIO.cs
+*
+* Learn more:
+* https://learn.microsoft.com/en-us/dotnet/core/deploying/trimming/incompatibilities#reflection-based-serializers
+* https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/source-generation
+*
+* Note that GameLibrary does not require the referencing project to be built native AOT.
+*/
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace game-console-app-name;
+
+/// <summary>
+/// Source generation context for <see cref="model-class-name"/> native AOT compatibility...
+/// </summary>
+[JsonSerializable(typeof(model-class-name))]
+internal partial class model-class-nameContext : JsonSerializerContext
+{
+}
+
+/// <summary>
+/// Provides the game IO capabilities to save to or read from a game data file.
+/// </summary>
+internal class model-class-nameIO
+{
+    /// <summary>
+    /// Reads a game data from a game file.
+    /// </summary>
+    /// <param name="gameDataPath">The path to read the game data from.</param>
+    /// <returns>The game data read as <see cref="model-class-name"/>.</returns>
+    public static model-class-name? Read(string gameDataPath) => File.Exists(gameDataPath) ? (model-class-name?)JsonSerializer.Deserialize(JsonDocument.Parse(File.ReadAllText(gameDataPath)), typeof(model-class-name), model-class-nameContext.Default) : null;
+
+    /// <summary>
+    /// Saves a game data to a game file.
+    /// </summary>
+    /// <param name="gameDataPath">The path to save the game data to.</param>
+    /// <param name="gameData">The game data as <see cref="model-class-name"/> to save.</param>
+    public static void Write(string gameDataPath, model-class-name gameData) => File.WriteAllText(gameDataPath, JsonSerializer.Serialize(gameData!, typeof(model-class-name), model-class-nameContext.Default));
+}

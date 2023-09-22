@@ -21,7 +21,7 @@ namespace GameLibrary;
 /// <remarks>
 /// The program main entry point can use the following boilerplate template to call Play():
 /// <code>
-/// new GameConsole<GameUI, GamePlay, ConsoleKey, bool>(
+/// new GameConsole&lt;GameUI, GamePlay, ConsoleKey, bool&gt;(
 ///		"Game name", 
 ///		"All rights reserved.", 
 ///		"Game description.", 
@@ -37,32 +37,47 @@ public class GameConsole<TGameUI, TGamePlay, TActionIn, TActionOut>(string name,
     /// <summary>
     /// Gets the game's name.
     /// </summary>
-    public string Name { get; } = name;
+    public string Name { get; set; } = name;
 
     /// <summary>
     /// Gets the game's copyright information.
     /// </summary>
-    public string Copyright { get; } = copyright;
+    public string Copyright { get; set; } = copyright;
 
     /// <summary>
     /// Gets the game description.
     /// </summary>
-    public string Description { get; } = description;
+    public string Description { get; set; } = description;
 
     /// <summary>
     /// Gets the game splash text.
     /// </summary>
-    public string? SplashText { get; } = splashText;
+    public string? SplashText { get; set; } = splashText;
 
     /// <summary>
     /// Gets the game play ready mode.
     /// </summary>
-    public GamePlayReadyMode GamePlayReadyMode { get; } = gamePlayReadyMode;
+    public GamePlayReadyMode GamePlayReadyMode { get; set; } = gamePlayReadyMode;
 
     /// <summary>
     /// Gets or sets an indicator if the game is ready.
     /// </summary>
     public bool IsReady { get; set; }
+
+    /// <summary>
+    /// Gets or sets the "Ready?" text.
+    /// </summary>
+    public string? ReadyText { get; set; }
+
+    /// <summary>
+    /// Gets or sets the "Set?" text.
+    /// </summary>
+    public string? SetText { get; set; } = "Press [Enter] to start playing...";
+
+    /// <summary>
+    /// Gets or sets the "Go!" text.
+    /// </summary>
+    public string? GoText { get; set; }
 
     /// <summary>
     /// Plays the game.
@@ -123,7 +138,7 @@ public class GameConsole<TGameUI, TGamePlay, TActionIn, TActionOut>(string name,
     }
 
     /// <summary>
-    /// Ready.
+    /// Ready?
     /// </summary>
     /// <returns>True when ready.</returns>
     /// <remarks>
@@ -142,19 +157,20 @@ public class GameConsole<TGameUI, TGamePlay, TActionIn, TActionOut>(string name,
         if (!IsReady)
         {
             Splash();
+            if (!string.IsNullOrEmpty(ReadyText)) Console.WriteLine(ReadyText);
             IsReady = true;
         }
         return IsReady;
     }
 
     /// <summary>
-    /// Set.
+    /// Set?
     /// </summary>
     /// <remarks>The default implementation prompts the player to press the [Enter] key to start playing.</remarks>
     public virtual void Set()
     {
         Console.WriteLine();
-        Console.WriteLine("Press [Enter] to start playing...");
+        if (!string.IsNullOrEmpty(SetText)) Console.WriteLine(SetText);
         new GameConsoleUX().GetKey(ConsoleKey.Enter);
     }
 
@@ -180,6 +196,7 @@ public class GameConsole<TGameUI, TGamePlay, TActionIn, TActionOut>(string name,
     /// </remarks>
     public virtual void Go()
     {
+        if (!string.IsNullOrEmpty(GoText)) Console.WriteLine(GoText);
         TGameUI gameUI = new();
         if (gameUI.Start())
         {

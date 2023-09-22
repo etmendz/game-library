@@ -1,0 +1,41 @@
+/*
+* GameLibrary (c) Mendz, etmendz. All rights reserved.
+* SPDX-License-Identifier: MIT 
+*
+* To use, save this template to a new .cs file (ex. Game.cs) in your project.
+* Replace "game-console-app-name" with your game console app project's namespace.
+* Find and replace the appropriate generic types with actual types in the game project.
+* Use this template to wrap GameConsole with game initialization and setup codes.
+*
+* Thus, the program main entry point can use the following boilerplate template to call Play():
+*
+* new Game().Play();
+*/
+
+namespace game-console-app-name;
+
+/// <summary>
+/// Wraps GameConsole with game initialization and setup codes.
+/// </summary>
+/// <remarks>
+/// The program main entry point can use the following boilerplate template to call Play():
+/// <code>
+/// new Game().Play();
+/// </code>
+/// </remarks>
+internal class Game : GameConsole<game-ui-name, game-play-name, action-in-name, action-out-name>
+{
+	public Game()
+		: base(
+			"Game name", 
+			"All rights reserved.", 
+			"Game description.", 
+			"Press [Esc] anytime to exit.", 
+			GamePlayReadyMode.WhileReady)
+	{
+		// Add other initialization and setup codes in the constructor...
+		// ReadyText = "";
+		// SetText = "Press any key to start playing...";
+		// GoText = "";
+	}
+}
