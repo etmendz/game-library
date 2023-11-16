@@ -6,7 +6,7 @@ using GameLibrary;
 
 namespace GameConsole3Seconds;
 
-internal class Game : GameConsole<GameUI, GamePlay, ConsoleKey, bool>
+internal class Game : GameConsole<GameUI, GamePlay>
 {
     public Game() 
         : base("GameConsole3Seconds", 

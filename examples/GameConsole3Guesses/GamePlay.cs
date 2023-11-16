@@ -6,7 +6,7 @@ using GameLibrary;
 
 namespace GameConsole3Guesses;
 
-internal class GamePlay : IGamePlay<int, bool>
+internal class GamePlay : IGamePlay
 {
     public int Secret { get; private set; }
 
@@ -16,15 +16,15 @@ internal class GamePlay : IGamePlay<int, bool>
 
     public bool Start()
     {
-        Secret = GameRandomizer.Next(1, 11);
+        Secret = Random.Shared.Next(1, 11);
         IsWon = false;
         Tries = 0;
         return true;
     }
 
-    public bool Action(int action)
+    public bool Action(GameActionInfo gameActionInfo)
     {
-        if (action == Secret) IsWon = true;
+        if (gameActionInfo.GetInputAs<int>() == Secret) IsWon = true;
         Tries++;
         return true;
     }

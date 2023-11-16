@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace GameConsole3Seconds;
 
-internal class GamePlay : IGamePlay<ConsoleKey, bool>
+internal class GamePlay : IGamePlay
 {
     public Stopwatch Stopwatch { get; private set; } = new();
 
@@ -21,7 +21,7 @@ internal class GamePlay : IGamePlay<ConsoleKey, bool>
         return Stopwatch.IsRunning;
     }
 
-    public bool Action(ConsoleKey action)
+    public bool Action(GameActionInfo gameActionInfo)
     {
         Stopwatch.Stop();
         long elapsed = Stopwatch.ElapsedMilliseconds;

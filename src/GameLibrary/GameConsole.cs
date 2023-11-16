@@ -11,17 +11,15 @@ namespace GameLibrary;
 /// </summary>
 /// <typeparam name="TGameUI">The game UI.</typeparam>
 /// <typeparam name="TGamePlay">The game play.</typeparam>
-/// <typeparam name="TActionIn">The action input type.</typeparam>
-/// <typeparam name="TActionOut">The action output or result type.</typeparam>
 /// <param name="name">The game's name.</param>
 /// <param name="copyright">The game copyright information.</param>
 /// <param name="description">The game description.</param>
-/// <param name="splashText">The game splash text.</param>
-/// <param name="gamePlayReadyMode">The game play ready mode.</param>
+/// <param name="splashText">The game splash text. Default is null.</param>
+/// <param name="gamePlayReadyMode">The game play ready mode. Default is <see cref="GamePlayReadyMode.IfReady"/>.</param>
 /// <remarks>
 /// The program main entry point can use the following boilerplate template to call Play():
 /// <code>
-/// new GameConsole&lt;GameUI, GamePlay, ConsoleKey, bool&gt;(
+/// new GameConsole&lt;GameUI, GamePlay&gt;(
 ///		"Game name", 
 ///		"All rights reserved.", 
 ///		"Game description.", 
@@ -30,9 +28,15 @@ namespace GameLibrary;
 ///	).Play();
 /// </code>
 /// </remarks>
-public class GameConsole<TGameUI, TGamePlay, TActionIn, TActionOut>(string name, string copyright, string description, string? splashText = null, GamePlayReadyMode gamePlayReadyMode = GamePlayReadyMode.IfReady) : IGameFlow
-    where TGameUI : IGameUI<TGamePlay, TActionIn, TActionOut>, new()
-    where TGamePlay : IGamePlay<TActionIn, TActionOut>
+public class GameConsole<TGameUI, TGamePlay>(
+        string name, 
+        string copyright, 
+        string description, 
+        string? splashText = null, 
+        GamePlayReadyMode gamePlayReadyMode = GamePlayReadyMode.IfReady
+    ) : IGameFlow
+    where TGameUI : IGameUI<TGamePlay>, new()
+    where TGamePlay : IGamePlay
 {
     /// <summary>
     /// Gets the game's name.
@@ -80,7 +84,7 @@ public class GameConsole<TGameUI, TGamePlay, TActionIn, TActionOut>(string name,
     public string? GoText { get; set; }
 
     /// <summary>
-    /// Plays the game.
+    /// Plays the game. Implements the basic flow.
     /// </summary>
     /// <remarks>The default implementation uses GamePlayReadyMode to switch (if|while) Ready(), Set(), Go()!</remarks>
     public virtual void Play()
@@ -128,13 +132,9 @@ public class GameConsole<TGameUI, TGamePlay, TActionIn, TActionOut>(string name,
     /// </summary>
     public virtual void Splash()
     {
-        Console.WriteLine($"{Name} {Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion} (c) {DateTime.Now.Year} {Copyright}");
+        Console.WriteLine($"{Name} {Assembly.GetEntryAssembly()?.GetName().Version?.ToString()} (c) {DateTime.Now.Year} {Copyright}");
         Console.WriteLine(Description);
-        if (!string.IsNullOrEmpty(SplashText))
-        {
-            Console.WriteLine();
-            Console.WriteLine(SplashText);
-        }
+        GameConsole<TGameUI, TGamePlay>.ShowText(SplashText);
     }
 
     /// <summary>
@@ -157,7 +157,7 @@ public class GameConsole<TGameUI, TGamePlay, TActionIn, TActionOut>(string name,
         if (!IsReady)
         {
             Splash();
-            if (!string.IsNullOrEmpty(ReadyText)) Console.WriteLine(ReadyText);
+            GameConsole<TGameUI, TGamePlay>.ShowText(ReadyText);
             IsReady = true;
         }
         return IsReady;
@@ -169,13 +169,12 @@ public class GameConsole<TGameUI, TGamePlay, TActionIn, TActionOut>(string name,
     /// <remarks>The default implementation prompts the player to press the [Enter] key to start playing.</remarks>
     public virtual void Set()
     {
-        Console.WriteLine();
-        if (!string.IsNullOrEmpty(SetText)) Console.WriteLine(SetText);
+        GameConsole<TGameUI, TGamePlay>.ShowText(SetText);
         new GameConsoleUX().GetKey(ConsoleKey.Enter);
     }
 
     /// <summary>
-    /// Go!
+    /// Go! Implements the basic construct.
     /// </summary>
     /// <remarks>
     /// The default implementation is as follows:
@@ -196,7 +195,7 @@ public class GameConsole<TGameUI, TGamePlay, TActionIn, TActionOut>(string name,
     /// </remarks>
     public virtual void Go()
     {
-        if (!string.IsNullOrEmpty(GoText)) Console.WriteLine(GoText);
+        GameConsole<TGameUI, TGamePlay>.ShowText(GoText);
         TGameUI gameUI = new();
         if (gameUI.Start())
         {
@@ -209,5 +208,18 @@ public class GameConsole<TGameUI, TGamePlay, TActionIn, TActionOut>(string name,
             } while (!gameUI.GameOver());
         }
         gameUI.End();
+    }
+
+    /// <summary>
+    /// If the text is not empty, writes an empty line followed by the text value.
+    /// </summary>
+    /// <param name="text">The text to show.</param>
+    protected static void ShowText(string? text)
+    {
+        if (!string.IsNullOrEmpty(text))
+        {
+            Console.WriteLine();
+            Console.WriteLine(text);
+        }
     }
 }

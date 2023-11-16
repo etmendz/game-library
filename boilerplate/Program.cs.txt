@@ -4,7 +4,7 @@
 *
 * To use, save this template to a new .cs file (ex. Program.cs) in your project.
 * Replace "game-console-app-name" with your game console app project's namespace.
-* This works only if a Game class is also implemented (see Game.cs.txt).
+* This works with Game.cs.txt.
 */
 namespace game-console-app-name;
 

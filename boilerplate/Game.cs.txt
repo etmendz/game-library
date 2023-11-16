@@ -6,10 +6,7 @@
 * Replace "game-console-app-name" with your game console app project's namespace.
 * Find and replace the appropriate generic types with actual types in the game project.
 * Use this template to wrap GameConsole with game initialization and setup codes.
-*
-* Thus, the program main entry point can use the following boilerplate template to call Play():
-*
-* new Game().Play();
+* This works with Program.cs.txt.
 */
 
 namespace game-console-app-name;
@@ -17,17 +14,10 @@ namespace game-console-app-name;
 /// <summary>
 /// Wraps GameConsole with game initialization and setup codes.
 /// </summary>
-/// <remarks>
-/// The program main entry point can use the following boilerplate template to call Play():
-/// <code>
-/// new Game().Play();
-/// </code>
-/// </remarks>
-internal class Game : GameConsole<game-ui-name, game-play-name, action-in-name, action-out-name>
+internal class Game : GameConsole<game-ui-name, game-play-name>
 {
 	public Game()
-		: base(
-			"Game name", 
+		: base("Game name", 
 			"All rights reserved.", 
 			"Game description.", 
 			"Press [Esc] anytime to exit.", 

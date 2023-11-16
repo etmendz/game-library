@@ -6,8 +6,14 @@ using GameLibrary;
 
 namespace GameConsole3Guesses;
 
-internal class GameUI : IGameUI<GamePlay, int, bool>
+internal class GameUI : IGameUI<GamePlay>
 {
+    /// <summary>
+    /// Note that a game can have different instances of GameConsoleUX for different game action mode and type combinations.
+    /// For example, one instance can have EscExit = true, and another instance with EscExit = false.
+    /// </summary>
+    private readonly GameConsoleUX _gameConsoleUX = new();
+
     public GamePlay GamePlay { get; set; }
 
     public GameUI() => GamePlay = new();
@@ -25,25 +31,24 @@ internal class GameUI : IGameUI<GamePlay, int, bool>
         Console.WriteLine();
         Console.Write($"Guess #{GamePlay.Tries + 1}: ");
         Console.CursorVisible = true;
-        int guess;
-        while (true)
+        GameActionInfo gameActionInfo = new()
         {
-            if (Int32.TryParse(Console.ReadLine(), out guess)) break;
-        }
+            ActionType = GameActionType.Response,
+            Input = GameConsoleUX.GetParsableEntry<int>()
+        };
         Console.CursorVisible = false;
-        return GamePlay.Action(guess);
+        return GamePlay.Action(gameActionInfo);
     }
 
     public bool Continue()
     {
-        bool isOK = false;
         if (GamePlay.Continue())
         {
             Console.WriteLine();
             Console.WriteLine("Try again? (Y/N): ");
-            isOK = new GameConsoleUX().GetYN() == ConsoleKey.Y;
+            return _gameConsoleUX.GetYN() == ConsoleKey.Y;
         }
-        return isOK;
+        return true;
     }
 
     public void End()

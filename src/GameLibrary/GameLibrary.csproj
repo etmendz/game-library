@@ -2,21 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-	  <IsAotCompatible>true</IsAotCompatible>
+	<IsAotCompatible>true</IsAotCompatible>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-	  <LangVersion>preview</LangVersion>
-	  <Version>1.0.8</Version>
-	  <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-	  <Copyright>© Mendz, etmendz. All rights reserved.</Copyright>
-	  <Title>GameLibrary</Title>
-	  <Description>A game library.</Description>
-	  <PackageProjectUrl>https://github.com/etmendz/game-library/wiki</PackageProjectUrl>
-	  <PackageReadmeFile>README.md</PackageReadmeFile>
-	  <RepositoryUrl>https://github.com/etmendz/game-library</RepositoryUrl>
-	  <PackageLicenseFile>LICENSE</PackageLicenseFile>
-	  <Authors>Mendz</Authors>
+	<Nullable>enable</Nullable>
+	<Version>1.1.0</Version>
+	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<Copyright>© Mendz, etmendz. All rights reserved.</Copyright>
+	<Title>GameLibrary</Title>
+	<Description>A game library.</Description>
+	<PackageProjectUrl>https://github.com/etmendz/game-library/wiki</PackageProjectUrl>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<RepositoryUrl>https://github.com/etmendz/game-library</RepositoryUrl>
+	<PackageLicenseFile>LICENSE</PackageLicenseFile>
+	<Authors>Mendz</Authors>
   </PropertyGroup>
 
   <ItemGroup>

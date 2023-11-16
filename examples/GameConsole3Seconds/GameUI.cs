@@ -6,8 +6,16 @@ using GameLibrary;
 
 namespace GameConsole3Seconds;
 
-internal class GameUI : IGameUI<GamePlay, ConsoleKey, bool>
+internal class GameUI : IGameUI<GamePlay>
 {
+    /// <summary>
+    /// Note that a game can have different instances of GameConsoleUX for different game action mode and type combinations.
+    /// For example, one instance can have EscExit = true, and another instance with EscExit = false.
+    /// </summary>
+    private readonly GameConsoleUX _gameConsoleUX = new();
+
+    private readonly HashSet<ConsoleKeyInfo> _validKeyInfos = [new(' ', ConsoleKey.Spacebar, false, false, false)];
+
     private bool _refresh = false;
 
     public GamePlay GamePlay { get; set; }
@@ -34,15 +42,13 @@ internal class GameUI : IGameUI<GamePlay, ConsoleKey, bool>
     public bool Action()
     {
         ConsoleKeyInfo ? cki = null;
-        GameConsoleUX gameUX = new();
-        HashSet<ConsoleKeyInfo> validKeyInfos = [new(' ', ConsoleKey.Spacebar, false, false, false)];
         while (cki is null)
         {
             Refresh();
-            cki = gameUX.GetKeyInfo(validKeyInfos);
+            cki = _gameConsoleUX.GetKeyInfo(_validKeyInfos);
         }
         Console.WriteLine();
-        return GamePlay.Action(cki.Value.Key);
+        return GamePlay.Action(new() { Input = cki.Value.Key });
     }
 
     public bool Continue()
@@ -62,7 +68,7 @@ internal class GameUI : IGameUI<GamePlay, ConsoleKey, bool>
         Console.ForegroundColor = foregroundColor;
         Console.WriteLine();
         Console.WriteLine("Try again? (Y/N): ");
-        if (new GameConsoleUX().GetYN() == ConsoleKey.Y)
+        if (_gameConsoleUX.GetYN() == ConsoleKey.Y)
         {
             _refresh = false; // Turn off refresh mode...
             GamePlay.Continue();

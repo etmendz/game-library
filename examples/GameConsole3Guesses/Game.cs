@@ -6,7 +6,7 @@ using GameLibrary;
 
 namespace GameConsole3Guesses;
 
-internal class Game : GameConsole<GameUI, GamePlay, int, bool>
+internal class Game : GameConsole<GameUI, GamePlay>
 {
     public Game() 
         : base("GameConsole3Guesses", 
